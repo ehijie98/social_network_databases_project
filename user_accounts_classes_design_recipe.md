@@ -75,9 +75,9 @@ Define the attributes of your Model class. You can usually map the table columns
 # Model class
 # (in lib/user_account.rb)
 
-class Recipe
+class UserAccount
   # Replace the attributes by your own columns.
-  attr_accessor :id, :name, :cooking_time, :rating
+  attr_accessor :id, :email_address, :username
 end
 
 # The keyword attr_accessor is a special Ruby feature
@@ -85,8 +85,8 @@ end
 # here's an example:
 #
 # user_account = UserAccount.new
-# recipe.email_address = 'johnsmith@gmail.com'
-# recipe.email_address 
+# user_account.email_address = 'johnsmith@gmail.com'
+# user_account.email_address 
 ```
 
 You may choose to test-drive this class, but unless it contains any more logic than the example above, it is probably not needed.
@@ -101,38 +101,46 @@ Using comments, define the method signatures (arguments and return value) and wh
 # Table name: user_accounts
 
 # Repository class
-# (in lib/recipe_repository.rb)
+# (in lib/user_account_repository.rb)
 
-class RecipeRepository
+class UserAccountRepository
+    # Selecting all records
+    # No arguments
+    def all
+        # Executes the SQL query:
+        # SELECT id, email_address, username FROM user_accounts;
+       
+        # Returns an array of UserAccount objects.
+    end
 
-  # Selecting all records
-  # No arguments
-  def all
-    # Executes the SQL query:
-    # SELECT id, name, cooking_time, rating FROM recipes;
+    # Gets a single record by its ID
+    # One argument: the id (number)
+    def find(id)
+        # Executes the SQL query:
+        # SELECT id, email_address, username FROM user_accounts WHERE id = $1;
+        
+        # Returns a single UserAccount object.
+    end
 
-    # Returns an array of Student objects.
-  end
+    # Inserts a new user account record 
+    # One argument: a new UserAccount object
+    def create(user_account)
+        # Executes the SQL query:
+        # INSERT INTO user_accounts (email_address, username) VALUES ($1, $2);
+       
+        # Returns nothing
+    end
 
-  # Gets a single record by its ID
-  # One argument: the id (number)
-  def find(id)
-    # Executes the SQL query:
-    # SELECT id, name, cooking_time, rating FROM recipes WHERE id = $1;
+    # Deletes a user account record by its id
+    # One argument: the id (number)
+    def delete(id)
+        # Executes the SQL query:
+        # DELETE FROM user_accounts WHERE id = $1
+       
+        # Returns nothing
+    end
 
-    # Returns a single Student object.
-  end
-
-  # Add more methods below for each operation you'd like to implement.
-
-  # def create(recipe)
-  # end
-
-  # def update(recipe)
-  # end
-
-  # def delete(recipe)
-  # end
+    # Haven't yet looked at Update SQL Query
 end
 ```
 
@@ -145,7 +153,7 @@ These examples will later be encoded as RSpec tests.
 # EXAMPLES
 
 # 1
-# Get all recipes
+# Get all user accounts
 
 repo = UserAccountRepository.new
 
@@ -158,11 +166,11 @@ user_accounts[0].email_address # =>  'johnsmith@gmail.com'
 user_accounts[0].username # =>  'johnsmith98'
 
 user_accounts[1].id # =>  2
-user_accounts[1].email_address # =>  'harrybaconh@gmail.com'
+user_accounts[1].email_address # =>  'harrybacon@gmail.com'
 user_accounts[1].username # =>  'harrybacon97'
 
 # 2
-# Get a single recipe
+# Get a single user account
 
 repo = UserAccountRepository.new
 
@@ -173,6 +181,7 @@ user_account.email_address # =>  ''johnsmith@gmail.com'
 user_account.username # =>  'johnsmith98'
 
 # Add more examples for each method
+
 ```
 Encode this example as a test.
 
@@ -184,7 +193,7 @@ This is so you get a fresh table contents every time you run the test suite.
 ```ruby
 # EXAMPLE
 
-# file: spec/recipe_repository_spec.rb
+# file: spec/user_Account_repository_spec.rb
 
 def reset_user_accounts_table
   seed_sql = File.read('spec/seeds_user_accounts.sql')

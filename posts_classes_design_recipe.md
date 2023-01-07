@@ -99,7 +99,7 @@ Using comments, define the method signatures (arguments and return value) and wh
 # Table name: posts
 
 # Repository class
-# (in lib/recipe_repository.rb)
+# (in lib/post_repository.rb)
 
 class PostRepository
 
@@ -152,35 +152,46 @@ These examples will later be encoded as RSpec tests.
 # EXAMPLES
 
 # 1
-# Get all recipes
+# Get all posts
 
 repo = UserAccountRepository.new
 
-user_accounts = repo.all
+posts = repo.all
 
-user_accounts.length # =>  2
+posts.length # =>  3
 
-user_accounts[0].id # =>  1
-user_accounts[0].email_address # =>  'johnsmith@gmail.com'
-user_accounts[0].username # =>  'johnsmith98'
+posts[0].id # =>  1
+posts.[0].title # =>  'ABC'
+posts[0].content # =>  'abc'
+posts[0].views # => 40
+posts[0].user_account_id # => 1
 
-user_accounts[1].id # =>  2
-user_accounts[1].email_address # =>  'harrybaconh@gmail.com'
-user_accounts[1].username # =>  'harrybacon97'
+posts[1].id # =>  2
+posts.[1].title # =>  'DEF'
+posts[1].content # =>  'def'
+posts[1].views # => 20
+posts[1].user_account_id # => 2
 
 # 2
-# Get a single recipe
+# Get a single post
 
-repo = RecipetRepository.new
+repo = PostRepository.new
 
-recipe = repo.find(1)
+post = repo.find(1)
 
-recipe.id # =>  1
-recipe.name # =>  'spaghetti carbonara'
-recipe.cooking_time # =>  '15'
-recipe.rating # => 4
+post.id # =>  1
+posts.title # =>  'ABC'
+post.content # =>  'abc'
+post.views # => 40
+post.user_account_id # => 1
 
 # Add more examples for each method
+
+repo = PostRepository.new
+
+repo.update(1)
+
+repo.find(1).views # => 41
 ```
 Encode this example as a test.
 
